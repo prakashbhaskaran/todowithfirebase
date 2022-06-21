@@ -9,7 +9,7 @@ const Navbar = () => {
   tags.forEach((tag) => {
     tag.addEventListener("click", (e) => {
       tags.forEach((item) => {
-        item.classList.remove("bg-violet-700");
+        item.classList.remove("bg-violet-700", "text-white");
         item.classList.add("text-gray-700");
       });
       e.currentTarget.classList.remove("text-gray-700");

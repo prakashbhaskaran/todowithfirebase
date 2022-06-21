@@ -49,7 +49,9 @@ const Sidebar = () => {
           <p>
             {
               list.filter(
-                (item) => item.date === `${today.toLocaleDateString()}`
+                (item) =>
+                  item.date === `${today.toLocaleDateString()}` &&
+                  item.completed === false
               ).length
             }
           </p>
@@ -60,14 +62,24 @@ const Sidebar = () => {
             {" "}
             {
               list.filter(
-                (item) => item.date === `${tomorrow.toLocaleDateString()}`
+                (item) =>
+                  item.date === `${tomorrow.toLocaleDateString()}` &&
+                  item.completed === false
               ).length
             }
           </p>
         </div>
         <div className="option flex justify-between p-3 rounded cursor-pointer">
           <p>Yesterday</p>
-          <p> {list.filter((item) => item.date === `${yesterday}`).length}</p>
+          <p>
+            {" "}
+            {
+              list.filter(
+                (item) =>
+                  item.date === `${yesterday}` && item.completed === false
+              ).length
+            }
+          </p>
         </div>
         <div
           className="option flex justify-between p-3 rounded cursor-pointer
@@ -90,19 +102,44 @@ const Sidebar = () => {
       <div className="categories flex flex-col gap-1.5">
         <div className="option flex justify-between p-3 rounded cursor-pointer">
           <p>Personal</p>
-          <p>{list.filter((item) => item.category === "personal").length}</p>
+          <p>
+            {
+              list.filter(
+                (item) =>
+                  item.category === "personal" && item.completed === false
+              ).length
+            }
+          </p>
         </div>
         <div className="option flex justify-between p-3 rounded cursor-pointer">
           <p>Home</p>
-          <p>{list.filter((item) => item.category === "home").length}</p>
+          <p>
+            {
+              list.filter(
+                (item) => item.category === "home" && item.completed === false
+              ).length
+            }
+          </p>
         </div>
         <div className="option flex justify-between p-3 rounded cursor-pointer">
           <p>Office</p>
-          <p>{list.filter((item) => item.category === "office").length}</p>
+          <p>
+            {
+              list.filter(
+                (item) => item.category === "office" && item.completed === false
+              ).length
+            }
+          </p>
         </div>
         <div className="option flex justify-between p-3 rounded cursor-pointer">
           <p>Travel</p>
-          <p>{list.filter((item) => item.category === "travel").length}</p>
+          <p>
+            {
+              list.filter(
+                (item) => item.category === "travel" && item.completed === false
+              ).length
+            }
+          </p>
         </div>
       </div>
     </div>

@@ -28,8 +28,9 @@ const List = () => {
               return item.completed === false;
             } else {
               return (
-                dayfinder(item.date) === title.toLowerCase() ||
-                item.category === title.toLowerCase()
+                (dayfinder(item.date) === title.toLowerCase() ||
+                  item.category === title.toLowerCase()) &&
+                item.completed === false
               );
             }
           })
