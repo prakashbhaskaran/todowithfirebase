@@ -5,7 +5,8 @@ import AddTodo from "../addtodo";
 
 const List = () => {
   const { list, toggleComplete, title, handleDelete } = useContext(todoContext);
-  const { today, tomorrow, yesterday, dayfinder } = useContext(DateContext);
+  const { today, tomorrow, yesterday, dayfinder, convertDate } =
+    useContext(DateContext);
 
   return (
     <div className="p-8 basis-9/12">
@@ -50,13 +51,13 @@ const List = () => {
                 </label>
                 <p
                   className={`capitalize ${
-                    item.date === `${today.toLocaleDateString()}`
+                    dayfinder(item.date) === "today"
                       ? "text-violet-500"
-                      : item.date === `${yesterday}`
+                      : dayfinder(item.date) === "yesterday"
                       ? "text-red-600"
-                      : item.date === `${tomorrow.toLocaleDateString()}`
+                      : dayfinder(item.date) === "tomorrow"
                       ? "text-blue-500"
-                      : item.date > `${tomorrow.toLocaleDateString()}`
+                      : dayfinder(item.date) === "future"
                       ? "text-yellow-700"
                       : ""
                   }`}

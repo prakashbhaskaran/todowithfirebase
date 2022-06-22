@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
+
 import {
   collection,
   addDoc,
@@ -8,6 +9,7 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 export const todoContext = React.createContext();
@@ -28,6 +30,7 @@ const TodoProvider = ({ children }) => {
       querySnapshot.forEach((doc) => {
         todoArray.push({ ...doc.data(), id: doc.id });
       });
+
       setList(todoArray);
     });
     return () => unsub();
@@ -67,6 +70,7 @@ const TodoProvider = ({ children }) => {
         completed: false,
         date: date || `${new Date().toLocaleDateString()}`,
         category: category,
+        createdAt: serverTimestamp(),
       });
       setText("");
       setShowModal(false);

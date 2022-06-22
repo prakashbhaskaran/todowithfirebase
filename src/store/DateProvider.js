@@ -13,16 +13,25 @@ const DateProvider = ({ children }) => {
   const tomorrow = new Date(today);
 
   tomorrow.setDate(tomorrow.getDate() + 1);
+  function convertDate(value) {
+    let date = `${value}`;
+    let datearray = date.split("/");
 
+    return datearray[1] + "/" + datearray[0] + "/" + datearray[2];
+  }
   function dayfinder(value) {
-    if (value === `${today.toLocaleDateString()}`) return "today";
-    else if (value === `${tomorrow.toLocaleDateString()}`) return "tomorrow";
-    else if (value === `${yesterday}`) return "yesterday";
-    else if (value > `${tomorrow.toLocaleDateString()}`) return "future";
+    value = convertDate(value);
+
+    if (value === `${convertDate(today.toLocaleDateString())}`) return "today";
+    else if (value === `${convertDate(tomorrow.toLocaleDateString())}`)
+      return "tomorrow";
+    else if (value === `${convertDate(yesterday)}`) return "yesterday";
+    else if (value > `${convertDate(tomorrow.toLocaleDateString())}`)
+      return "future";
     else return "overdue";
   }
 
-  const value = { today, yesterday, tomorrow, dayfinder };
+  const value = { today, yesterday, tomorrow, dayfinder, convertDate };
   return <DateContext.Provider value={value}>{children}</DateContext.Provider>;
 };
 

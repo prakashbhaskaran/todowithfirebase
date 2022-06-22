@@ -4,7 +4,7 @@ import { todoContext } from "../../store/TodoProvider";
 
 const Sidebar = () => {
   const { list, setTitle } = useContext(todoContext);
-  const { today, tomorrow, yesterday } = useContext(DateContext);
+  const { today, tomorrow, yesterday, convertDate } = useContext(DateContext);
 
   let options = document.querySelectorAll(".option");
   options.forEach((option) => {
@@ -48,7 +48,8 @@ const Sidebar = () => {
           {
             list.filter(
               (item) =>
-                item.date > `${tomorrow.toLocaleDateString()}` &&
+                convertDate(item.date) >
+                  `${convertDate(tomorrow.toLocaleDateString())}` &&
                 item.completed === false
             ).length
           }
@@ -66,7 +67,8 @@ const Sidebar = () => {
             {
               list.filter(
                 (item) =>
-                  item.date === `${today.toLocaleDateString()}` &&
+                  convertDate(item.date) ===
+                    `${convertDate(today.toLocaleDateString())}` &&
                   item.completed === false
               ).length
             }
@@ -79,7 +81,8 @@ const Sidebar = () => {
             {
               list.filter(
                 (item) =>
-                  item.date === `${tomorrow.toLocaleDateString()}` &&
+                  convertDate(item.date) ===
+                    `${convertDate(tomorrow.toLocaleDateString())}` &&
                   item.completed === false
               ).length
             }
@@ -92,7 +95,8 @@ const Sidebar = () => {
             {
               list.filter(
                 (item) =>
-                  item.date === `${yesterday}` && item.completed === false
+                  convertDate(item.date) === `${convertDate(yesterday)}` &&
+                  item.completed === false
               ).length
             }
           </p>
@@ -105,7 +109,9 @@ const Sidebar = () => {
           <p>
             {
               list.filter(
-                (item) => item.date < `${yesterday}` && item.completed === false
+                (item) =>
+                  convertDate(item.date) < `${convertDate(yesterday)}` &&
+                  item.completed === false
               ).length
             }
           </p>
