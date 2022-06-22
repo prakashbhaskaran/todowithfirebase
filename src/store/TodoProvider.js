@@ -19,19 +19,6 @@ const TodoProvider = ({ children }) => {
   const [title, setTitle] = useState("existing");
   const [date, setDate] = useState("");
   const [showModal, setShowModal] = React.useState(false);
-  //dates
-  const today = new Date();
-  const yesterday = new Date(
-    new Date().valueOf() - 1000 * 60 * 60 * 24
-  ).toLocaleDateString();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  function dayfinder(value) {
-    if (value === `${today.toLocaleDateString()}`) return "today";
-    else if (value === `${tomorrow.toLocaleDateString()}`) return "tomorrow";
-    else if (value === `${yesterday}`) return "yesterday";
-    else return "overdue";
-  }
 
   useEffect(() => {
     const queryCol = query(collection(db, "todos"));
@@ -71,7 +58,6 @@ const TodoProvider = ({ children }) => {
 
   const addToList = async (e) => {
     e.preventDefault();
-
     if (
       text !== "" &&
       dateIsValid(date || `${new Date().toLocaleDateString()}`)
@@ -101,10 +87,6 @@ const TodoProvider = ({ children }) => {
     setText,
     setCategory,
     setDate,
-    today,
-    yesterday,
-    tomorrow,
-    dayfinder,
     toggleComplete,
     handleDelete,
     title,

@@ -1,18 +1,11 @@
 import React, { useContext } from "react";
+import { DateContext } from "../../store/DateProvider";
 import { todoContext } from "../../store/TodoProvider";
 import AddTodo from "../addtodo";
 
 const List = () => {
-  const {
-    list,
-    today,
-    tomorrow,
-    yesterday,
-    dayfinder,
-    toggleComplete,
-    title,
-    handleDelete,
-  } = useContext(todoContext);
+  const { list, toggleComplete, title, handleDelete } = useContext(todoContext);
+  const { today, tomorrow, yesterday, dayfinder } = useContext(DateContext);
 
   return (
     <div className="p-8 basis-9/12">
@@ -63,6 +56,8 @@ const List = () => {
                       ? "text-red-600"
                       : item.date === `${tomorrow.toLocaleDateString()}`
                       ? "text-blue-500"
+                      : item.date > `${tomorrow.toLocaleDateString()}`
+                      ? "text-yellow-700"
                       : ""
                   }`}
                 >

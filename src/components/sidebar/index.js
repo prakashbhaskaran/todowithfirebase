@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import { DateContext } from "../../store/DateProvider";
 import { todoContext } from "../../store/TodoProvider";
 
 const Sidebar = () => {
-  const { list, today, tomorrow, yesterday, setTitle } =
-    useContext(todoContext);
+  const { list, setTitle } = useContext(todoContext);
+  const { today, tomorrow, yesterday } = useContext(DateContext);
 
   let options = document.querySelectorAll(".option");
   options.forEach((option) => {
@@ -37,6 +38,21 @@ const Sidebar = () => {
       >
         <p>Completed</p>
         <p>{list.filter((item) => item.completed === true).length}</p>
+      </div>
+      <div
+        className="option flex justify-between p-3 rounded cursor-pointer
+        "
+      >
+        <p>Future</p>
+        <p>
+          {
+            list.filter(
+              (item) =>
+                item.date > `${tomorrow.toLocaleDateString()}` &&
+                item.completed === false
+            ).length
+          }
+        </p>
       </div>
 
       {/*horizontal line*/}
