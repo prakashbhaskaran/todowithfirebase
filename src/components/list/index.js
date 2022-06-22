@@ -1,24 +1,21 @@
 import React, { useContext } from "react";
 import { DateContext } from "../../store/DateProvider";
 import { todoContext } from "../../store/TodoProvider";
-import AddTodo from "../addtodo";
 
 const List = () => {
   const { list, toggleComplete, title, handleDelete } = useContext(todoContext);
-  const { today, tomorrow, yesterday, dayfinder, convertDate } =
-    useContext(DateContext);
+  const { dayfinder } = useContext(DateContext);
 
   return (
-    <div className="p-8 basis-9/12">
+    <div className="p-8 basis-3/12 xl:basis-3/5">
       <h1 className="font-bold text-2xl capitalize">{title}</h1>
-      <AddTodo />
 
       <div className="list mt-6 flex flex-col gap-5">
         {list
           .filter((item) => {
             if (title.toLowerCase() === "completed") {
               return item.completed === true;
-            } else if (title.toLowerCase() === "existing") {
+            } else if (title.toLowerCase() === "all") {
               return item.completed === false;
             } else {
               return (
@@ -78,7 +75,7 @@ const List = () => {
         {list.filter((item) => {
           if (title.toLowerCase() === "completed") {
             return item.completed === true;
-          } else if (title.toLowerCase() === "existing") {
+          } else if (title.toLowerCase() === "all") {
             return item.completed === false;
           } else {
             return (

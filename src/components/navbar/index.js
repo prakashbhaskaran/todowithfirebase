@@ -17,7 +17,7 @@ const Navbar = () => {
     });
   });
   return (
-    <header className="flex items-center py-4 px-8 border-b justify-between">
+    <header className="flex items-center py-4 px-8 justify-between border-b-2 border-indigo-500">
       <div>
         <h1 className="leading-none text-xl text-grey-darkest font-bold ">
           TASKS
@@ -26,7 +26,7 @@ const Navbar = () => {
       <div className="flex pl-3">
         <div className="flex justify-center">
           <button
-            className="block text-white bg-violet-500 focus:outline-none  font-medium rounded-lg text-sm flex items-center px-5 py-2 "
+            className="block text-white bg-violet-500 focus:outline-none hover:outline-violet-200 outline font-medium rounded-lg text-sm flex items-center px-5 py-3 "
             type="button"
             onClick={() => setShowModal(true)}
           >

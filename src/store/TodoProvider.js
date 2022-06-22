@@ -18,7 +18,7 @@ const TodoProvider = ({ children }) => {
   const [list, setList] = useState([]);
   const [text, setText] = useState("");
   const [category, setCategory] = useState("personal");
-  const [title, setTitle] = useState("existing");
+  const [title, setTitle] = useState("All");
   const [date, setDate] = useState("");
   const [showModal, setShowModal] = React.useState(false);
 
@@ -61,14 +61,11 @@ const TodoProvider = ({ children }) => {
 
   const addToList = async (e) => {
     e.preventDefault();
-    if (
-      text !== "" &&
-      dateIsValid(date || `${new Date().toLocaleDateString()}`)
-    ) {
+    if (text !== "" && dateIsValid(date)) {
       await addDoc(collection(db, "todos"), {
         content: text,
         completed: false,
-        date: date || `${new Date().toLocaleDateString()}`,
+        date: date,
         category: category,
         createdAt: serverTimestamp(),
       });

@@ -22,12 +22,12 @@ const Sidebar = () => {
   });
 
   return (
-    <div className="p-8 basis-3/12">
+    <div className="p-8 xl:basis-3/12 basis-2/5 border-r-2 border-indigo-500">
       <div
         className="option flex justify-between p-3  bg-indigo-50 rounded cursor-pointer
         "
       >
-        <p className="text-indigo-700 font-bold">Existing</p>
+        <p className="text-indigo-700 font-bold">All</p>
         <p className="text-indigo-700 font-bold">
           {list.filter((item) => item.completed === false).length}
         </p>
