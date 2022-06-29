@@ -10,7 +10,9 @@ import {
   doc,
   deleteDoc,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const todoContext = React.createContext();
 
@@ -20,20 +22,26 @@ const TodoProvider = ({ children }) => {
   const [category, setCategory] = useState("personal");
   const [title, setTitle] = useState("All");
   const [date, setDate] = useState("");
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const queryCol = query(collection(db, "todos"));
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        const uid = user.uid;
+        const queryCol = query(collection(db, uid));
 
-    const unsub = onSnapshot(queryCol, (querySnapshot) => {
-      let todoArray = [];
-      querySnapshot.forEach((doc) => {
-        todoArray.push({ ...doc.data(), id: doc.id });
-      });
+        onSnapshot(queryCol, (querySnapshot) => {
+          let todoArray = [];
+          querySnapshot.forEach((doc) => {
+            todoArray.push({ ...doc.data(), id: doc.id });
+          });
 
-      setList(todoArray);
+          setList(todoArray);
+        });
+      } else {
+        console.log("listing error");
+      }
     });
-    return () => unsub();
   }, []);
 
   //date validation
@@ -61,24 +69,45 @@ const TodoProvider = ({ children }) => {
 
   const addToList = async (e) => {
     e.preventDefault();
+    const auth = getAuth();
     if (text !== "" && dateIsValid(date)) {
-      await addDoc(collection(db, "todos"), {
-        content: text,
-        completed: false,
-        date: date,
-        category: category,
-        createdAt: serverTimestamp(),
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid;
+          addDoc(collection(db, uid), {
+            content: text,
+            completed: false,
+            date: date,
+            category: category,
+            createdAt: serverTimestamp(),
+          });
+          setText("");
+          setShowModal(false);
+        } else {
+        }
       });
-      setText("");
-      setShowModal(false);
     }
   };
 
-  const toggleComplete = async (todo) => {
-    await updateDoc(doc(db, "todos", todo.id), { completed: !todo.completed });
+  const toggleComplete = (todo) => {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        const uid = user.uid;
+        updateDoc(doc(db, uid, todo.id), { completed: !todo.completed });
+      } else {
+        console.log("not modified");
+      }
+    });
   };
-  const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "todos", id));
+  const handleDelete = (id) => {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        const uid = user.uid;
+        deleteDoc(doc(db, uid, id));
+      } else {
+        console.log("not deleted");
+      }
+    });
   };
 
   const value = {
